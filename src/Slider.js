@@ -115,6 +115,30 @@ class Slider extends Component {
         );
     }
 
+    renderLabels() {
+        const { hideLabels, postfix, prefix } = this.props;
+
+        if (hideLabels) {
+            return null;
+        }
+
+        const values = this.getValues();
+
+        return (
+            <ul
+                className="orizzonte__slider-labels"
+            >
+                { values.map((v) => (
+                    <li
+                        className="orizzonte__slider-label"
+                    >
+                        { `${ prefix || '' }${ v }${ postfix || '' }` }
+                    </li>
+                ))}
+            </ul>
+        );
+    }
+
     render() {
         return (
             <div
@@ -122,6 +146,7 @@ class Slider extends Component {
             >
                 { this.renderCaption() }
                 { this.renderSlider() }
+                { this.renderLabels() }
             </div>
         );
     }
@@ -131,13 +156,16 @@ Slider.displayName = 'OrizzonteSlider';
 
 Slider.propTypes = {
     disabled: PropTypes.bool,
+    hideLabels: PropTypes.bool,
     /** Label for this filter section */
     label: PropTypes.string,
     max: PropTypes.number,
     min: PropTypes.number,
     /** Internal callback for when filter value has changed */
     onUpdate: PropTypes.func,
-    /** Symbol to prefix the values with (e.g. currency) */
+    /** Symbol to postfix the values with (e.g. distance unit) */
+    postfix: PropTypes.string,
+    /** Symbol to prefix the values with (e.g. currency unit) */
     prefix: PropTypes.string,
     /** Whether to show a date range picker or a single day picker */
     range: PropTypes.bool,
@@ -151,10 +179,12 @@ Slider.propTypes = {
 
 Slider.defaultProps = {
     disabled: false,
+    hideLabels: false,
     label: null,
     max: 100,
     min: 1,
     onUpdate: () => {},
+    postfix: null,
     prefix: null,
     range: false,
     rangeStringSeparator: null,

@@ -2,6 +2,18 @@
     margin: 5px 10px;
 }
 
-.orizzonte__slider {
+.orizzonte__slider-labels {
+    color: #1d1d1b;
+    padding: 0;
+    display: flex;
+    list-style: none;
+}
 
+.orizzonte__slider-label {
+    padding-top: 5px;
+    flex-grow: 1;
+
+    &:last-child {
+        text-align: right;
+    }
 }
