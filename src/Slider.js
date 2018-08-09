@@ -57,7 +57,7 @@ class Slider extends Component {
     }
 
     renderSlider() {
-        const { min, max, onUpdate, rangeStringSeparator, ticks, width } = this.props;
+        const { min, max, onUpdate, rangeStringSeparator, sliderProps, ticks, width } = this.props;
 
         const pitConfig = ((t) => {
             if (!t) {
@@ -94,6 +94,7 @@ class Slider extends Component {
                     }}
                     values={ this.getValues() }
                     { ...pitConfig }
+                    { ...sliderProps }
                 />
             </div>
         );
@@ -171,6 +172,9 @@ Slider.propTypes = {
     range: PropTypes.bool,
     /** When using a range separator, the range will be stored as (separated) string */
     rangeStringSeparator: PropTypes.string,
+    /** Optional props to be passed on to the rheostat component */
+    sliderProps: PropTypes.object,
+    /** Array of points on which to render ticks */
     ticks: PropTypes.array,
     /** The selected value */
     value: PropTypes.array,
@@ -188,6 +192,7 @@ Slider.defaultProps = {
     prefix: null,
     range: false,
     rangeStringSeparator: null,
+    sliderProps: {},
     ticks: null,
     value: [1],
     width: 300
