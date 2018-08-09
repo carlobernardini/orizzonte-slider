@@ -1,0 +1,66 @@
+{
+  "name": "orizzonte-slider",
+  "version": "0.1.0",
+  "description": "Slider filter for Orizzonte library",
+  "main": "./dist/orizzonte-slider.min.js",
+  "scripts": {
+    "build": "webpack --progress --config ./config/webpack.config.prod.js",
+    "prepublish": "npm run build",
+    "storybook": "start-storybook -p 9002 -c ./storybook",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carlobernardini/orizzonte-slider.git"
+  },
+  "keywords": [
+    "orizzonte",
+    "filter",
+    "slider"
+  ],
+  "author": "Carlo Bernardini",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/carlobernardini/orizzonte-slider/issues"
+  },
+  "homepage": "https://github.com/carlobernardini/orizzonte-slider#readme",
+  "devDependencies": {
+    "@dump247/storybook-state": "^1.5.0",
+    "@storybook/addon-info": "^3.4.8",
+    "@storybook/react": "^3.4.8",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-to-json": "^3.3.4",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jsx-a11y": "^6.1.0",
+    "eslint-plugin-react": "^7.10.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "jest": "^23.4.0",
+    "node-sass": "^4.9.2",
+    "postcss-loader": "^2.1.6",
+    "sass-loader": "^7.0.3",
+    "webpack": "^3.11.0"
+  },
+  "peerDependencies": {
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
+  },
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "lodash": "^4.17.10",
+    "moment": "^2.22.2",
+    "orizzonte": "^0.1.9",
+    "prop-types": "^15.6.2",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "rheostat": "^3.0.1"
+  }
+}
