@@ -17,6 +17,7 @@ const component = ({ store }) => {
 
     return (
         <Orizzonte
+            dispatchOnFilterChange
             query={ query }
             groupTopLabels
             onChange={ (queryObject) => {
@@ -50,7 +51,7 @@ const component = ({ store }) => {
     );
 };
 
-stories.add('Default', withState({
+stories.add('Range slider', withState({
     query: {},
     groups: [{
         included: true,
@@ -83,6 +84,24 @@ stories.add('Default', withState({
                 ticks={[...Array(19).keys()].map(i => (i + 1) * 5)}
                 rangeStringSeparator="__"
                 range
+            />
+        ]
+    }]
+})(
+    withInfo()(component)
+));
+
+stories.add('Single value', withState({
+    query: {},
+    groups: [{
+        included: true,
+        label: 'Age slider',
+        filters: [
+            <Slider
+                fieldName="age"
+                key="1"
+                selectedLabel={ (value) => (`${ value } years old`) }
+                ticks={[...Array(19).keys()].map(i => (i + 1) * 5)}
             />
         ]
     }]

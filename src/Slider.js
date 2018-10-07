@@ -5,6 +5,20 @@ import 'rheostat/initialize';
 import 'rheostat/css/rheostat.css';
 import './scss/Slider.scss';
 
+const Caption = ({ children }) => {
+    if (!children) {
+        return null;
+    }
+
+    return (
+        <div
+            className="orizzonte__filter-caption"
+        >
+            { children }
+        </div>
+    );
+};
+
 class Slider extends Component {
     getParsedRange() {
         const { max, min, value, rangeStringSeparator } = this.props;
@@ -79,7 +93,7 @@ class Slider extends Component {
                 <Rheostat
                     max={ max }
                     min={ min }
-                    onValuesUpdated={ (slider) => {
+                    onChange={ (slider) => {
                         const { values } = slider;
 
                         if (rangeStringSeparator && values.length === 2) {
@@ -96,22 +110,6 @@ class Slider extends Component {
                     { ...pitConfig }
                     { ...sliderProps }
                 />
-            </div>
-        );
-    }
-
-    renderCaption() {
-        const { label } = this.props;
-
-        if (!label) {
-            return null;
-        }
-
-        return (
-            <div
-                className="orizzonte__filter-caption"
-            >
-                { label }
             </div>
         );
     }
@@ -141,11 +139,15 @@ class Slider extends Component {
     }
 
     render() {
+        const { label } = this.props;
+
         return (
             <div
                 className="orizzonte__filter"
             >
-                { this.renderCaption() }
+                <Caption>
+                    { label }
+                </Caption>
                 { this.renderSlider() }
                 { this.renderLabels() }
             </div>
@@ -196,6 +198,14 @@ Slider.defaultProps = {
     ticks: null,
     value: [1],
     width: 300
+};
+
+Caption.propTypes = {
+    children: PropTypes.string
+};
+
+Caption.defaultProps = {
+    children: null
 };
 
 export default Slider;
