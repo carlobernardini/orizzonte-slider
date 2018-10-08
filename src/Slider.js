@@ -149,9 +149,10 @@ class Slider extends Component {
             <ul
                 className="orizzonte__slider-labels"
             >
-                { values.map((v) => (
+                { values.map((v, i) => (
                     <li
                         className="orizzonte__slider-label"
+                        key={ `label_${ i }` }
                     >
                         { `${ prefix || '' }${ v }${ postfix || '' }` }
                     </li>
