@@ -20,16 +20,22 @@ const Caption = ({ children }) => {
 };
 
 class Slider extends Component {
-    getParsedRange() {
-        const { max, min, value, rangeStringSeparator } = this.props;
+    constructor(props) {
+        super(props);
 
-        const parts = value.split(rangeStringSeparator);
+        this.state = {
+            values: props.value
+        };
+    }
+
+    getParsedRange(min, max, rangeStringSeparator, values) {
+        const parts = values.split(rangeStringSeparator);
 
         if (parts.length === 2) {
             return parts.map((n) => (Number(n)));
         }
 
-        if (value.indexOf(rangeStringSeparator) === 0) {
+        if (values.indexOf(rangeStringSeparator) === 0) {
             return [
                 min,
                 Number(parts[0])
@@ -43,17 +49,18 @@ class Slider extends Component {
     }
 
     getValues() {
-        const { min, max, value, range, rangeStringSeparator } = this.props;
+        const { min, max, range, rangeStringSeparator } = this.props;
+        const { values } = this.state;
 
-        if (!value) {
+        if (!values) {
             return range ? [min, max] : [min];
         }
 
         if (range && rangeStringSeparator) {
-            return this.getParsedRange();
+            return this.getParsedRange(min, max, rangeStringSeparator, values);
         }
 
-        return range ? value : [Number(value)];
+        return range ? values : [Number(values)];
     }
 
     pitComponent({ style, children }) {
@@ -70,8 +77,27 @@ class Slider extends Component {
         );
     }
 
+    formatCurrentValue(slider) {
+        if (!slider) {
+            return false;
+        }
+
+        const { rangeStringSeparator } = this.props;
+        const { values } = slider;
+
+        if (rangeStringSeparator && values.length === 2) {
+            return values.map((n) => (String(n))).join(rangeStringSeparator);
+        }
+
+        if (values.length === 2) {
+            return values;
+        }
+
+        return values[0];
+    }
+
     renderSlider() {
-        const { min, max, onUpdate, rangeStringSeparator, sliderProps, ticks, width } = this.props;
+        const { min, max, onUpdate, sliderProps, ticks, width } = this.props;
 
         const pitConfig = ((t) => {
             if (!t) {
@@ -93,18 +119,14 @@ class Slider extends Component {
                 <Rheostat
                     max={ max }
                     min={ min }
+                    onValuesUpdated={ (slider) => {
+                        this.setState({
+                            values: this.formatCurrentValue(slider)
+                        });
+                    }}
                     onChange={ (slider) => {
-                        const { values } = slider;
-
-                        if (rangeStringSeparator && values.length === 2) {
-                            return onUpdate(
-                                values.map((n) => (String(n))).join(rangeStringSeparator)
-                            );
-                        }
-
-                        return onUpdate(
-                            values.length === 2 ? values : values[0]
-                        );
+                        const values = this.formatCurrentValue(slider);
+                        onUpdate(values);
                     }}
                     values={ this.getValues() }
                     { ...pitConfig }
